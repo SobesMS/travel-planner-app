@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function TripOverview({ trip }) {
   const navigate = useNavigate();
+  const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
@@ -20,11 +21,18 @@ export default function TripOverview({ trip }) {
         </div>
 
         <div className="p-6 space-y-4">
-          <img
-            src={trip.image || '/map-placeholder.jpg'}
-            alt="Trip Map"
-            className="w-full h-64 object-cover rounded-lg"
-          />
+          {/* Google Maps Embed */}
+          <div className="w-full h-64 rounded-lg overflow-hidden">
+            <iframe
+              title="Trip Map"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              loading="lazy"
+              allowFullScreen
+              src={`https://www.google.com/maps/embed/v1/place?key=${apiKey}&q=${encodeURIComponent(trip.name)}`}
+            ></iframe>
+          </div>
 
           <div className="space-y-2">
             <h2 className="text-xl font-semibold text-gray-700">Itinerary</h2>
